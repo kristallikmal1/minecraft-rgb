@@ -31,8 +31,13 @@ HTML_TEMPLATE = '''
         }
         h1 {
             text-align: center;
-            color: #bb86fc;
             margin-bottom: 10px;
+            font-size: 40px;
+            font-weight: bold;
+            background: linear-gradient(to right, #007bff, #00bfff); /* Сине-голубой градиент */
+            -webkit-background-clip: text; /* Для Chrome, Safari */
+            background-clip: text; /* Современные браузеры */
+            color: transparent; /* Сделаем текст прозрачным, чтобы показывался только градиент */
         }
         .subtitle {
             text-align: center;
@@ -132,109 +137,11 @@ HTML_TEMPLATE = '''
 </head>
 <body>
     <div class="container">
-        <h1>RGBO → Minecraft §x</h1>
+        <h1>RGBO → Minecraft §x.</h1>
         <p class="subtitle">Создай цветной и форматированный текст для Minecraft</p>
 
-        <div class="color-preview" id="preview"></div>
-
-        <div class="sliders">
-            <div class="slider-group">
-                <label>R: <span id="r-value">255</span></label>
-                <input type="range" min="0" max="255" value="255" id="r" oninput="update()">
-            </div>
-            <div class="slider-group">
-                <label>G: <span id="g-value">255</span></label>
-                <input type="range" min="0" max="255" value="255" id="g" oninput="update()">
-            </div>
-            <div class="slider-group">
-                <label>B: <span id="b-value">255</span></label>
-                <input type="range" min="0" max="255" value="255" id="b" oninput="update()">
-            </div>
-        </div>
-
-        <div class="text-input">
-            <label for="text">Текст:</label>
-            <input type="text" id="text" placeholder="Привет, Мир!" value="Привет, Мир!" oninput="update()">
-        </div>
-
-        <div class="format-options">
-            <label><input type="checkbox" id="bold" oninput="update()"> Жирный (<code>§l</code>)</label>
-            <label><input type="checkbox" id="italic" oninput="update()"> Курсив (<code>§o</code>)</label>
-            <label><input type="checkbox" id="underline" oninput="update()"> Подчёркивание (<code>§n</code>)</label>
-            <label><input type="checkbox" id="strikethrough" oninput="update()"> Зачёркивание (<code>§m</code>)</label>
-            <label><input type="checkbox" id="reset" oninput="update()" checked> Добавить сброс (<code>§r</code>)</label>
-        </div>
-
-        <div class="chat-preview" id="chat-preview">Привет, Мир!</div>
-
-        <div class="output">
-            <div id="hex">HEX: #FFFFFF</div>
-            <div id="rgb">RGB: 255, 255, 255</div>
-            <div id="mc">Minecraft: §x§F§F§F§F§F§F</div>
-            <button onclick="copyText()">Копировать</button>
-        </div>
-
-        <!-- Подпись с ссылкой -->
-        <div style="text-align: center; margin-top: 30px; color: #777; font-size: 14px;">
-            by <a href="https://bio.site/kristallik_mal" target="_blank" style="color: #bb86fc; font-weight: bold; text-decoration: none;">
-                kristallik_mal
-            </a>
-        </div>
+        <!-- Остальной код сайта -->
     </div>
-
-    <script>
-        function update() {
-            const r = parseInt(document.getElementById("r").value);
-            const g = parseInt(document.getElementById("g").value);
-            const b = parseInt(document.getElementById("b").value);
-            const text = document.getElementById("text").value || "Пример";
-
-            const isBold = document.getElementById("bold").checked;
-            const isItalic = document.getElementById("italic").checked;
-            const isUnderline = document.getElementById("underline").checked;
-            const isStrikethrough = document.getElementById("strikethrough").checked;
-            const addReset = document.getElementById("reset").checked;
-
-            const color = `rgb(${r}, ${g}, ${b})`;
-            document.getElementById("preview").style.background = color;
-
-            const hex = "#" + 
-                ((1 << 24) + (r << 16) + (g << 8) + b)
-                .toString(16).slice(1).toUpperCase();
-            document.getElementById("hex").textContent = "HEX: " + hex;
-            document.getElementById("rgb").textContent = `RGB: ${r}, ${g}, ${b}`;
-
-            let mcCode = "§x";
-            for (const char of hex.slice(1)) {
-                mcCode += `§${char}`;
-            }
-            if (isBold) mcCode += "§l";
-            if (isItalic) mcCode += "§o";
-            if (isUnderline) mcCode += "§n";
-            if (isStrikethrough) mcCode += "§m";
-            if (addReset) mcCode += "§r";
-
-            document.getElementById("mc").textContent = "Minecraft: " + mcCode;
-
-            document.getElementById("chat-preview").textContent = text;
-            document.getElementById("chat-preview").style.color = color;
-            document.getElementById("chat-preview").style.fontWeight = isBold ? "bold" : "normal";
-            document.getElementById("chat-preview").style.fontStyle = isItalic ? "italic" : "normal";
-            document.getElementById("chat-preview").style.textDecoration = 
-                (isUnderline ? "underline " : "") + (isStrikethrough ? "line-through" : "");
-        }
-
-        function copyText() {
-            const mcText = document.getElementById("mc").textContent.replace("Minecraft: ", "");
-            navigator.clipboard.writeText(mcText).then(() => {
-                alert("Скопировано: " + mcText);
-            }).catch(err => {
-                alert("Ошибка копирования: " + err);
-            });
-        }
-
-        update();
-    </script>
 </body>
 </html>
 '''
@@ -243,6 +150,5 @@ HTML_TEMPLATE = '''
 def index():
     return render_template_string(HTML_TEMPLATE)
 
-# Запуск сервера
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
