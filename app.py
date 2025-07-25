@@ -7,7 +7,7 @@ HTML_TEMPLATE = '''
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Minecraft §x Цветной Текст</title>
+    <title>RGB для Pisya</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Jockey+One&display=swap" rel="stylesheet">
     <style>
@@ -134,11 +134,14 @@ HTML_TEMPLATE = '''
 </head>
 <body>
     <div class="container">
-        <h1>RGBO → Minecraft §x.</h1>
+        <!-- Новый заголовок -->
+        <h1>RGB для Pisya</h1>
         <p class="subtitle">Создай цветной и форматированный текст для Minecraft</p>
 
+        <!-- Превью цвета -->
         <div class="color-preview" id="preview"></div>
 
+        <!-- Ползунки RGB -->
         <div class="sliders">
             <div class="slider-group">
                 <label>R: <span id="r-value">255</span></label>
@@ -154,11 +157,13 @@ HTML_TEMPLATE = '''
             </div>
         </div>
 
+        <!-- Ввод текста -->
         <div class="text-input">
             <label for="text">Текст:</label>
-            <input type="text" id="text" placeholder="Привет, Мир!" value="Привет, Мир!" oninput="update()">
+            <input type="text" id="text" placeholder="Привет, Pisya!" value="Привет, Pisya!" oninput="update()">
         </div>
 
+        <!-- Форматирование -->
         <div class="format-options">
             <label><input type="checkbox" id="bold" oninput="update()"> Жирный (<code>§l</code>)</label>
             <label><input type="checkbox" id="italic" oninput="update()"> Курсив (<code>§o</code>)</label>
@@ -167,8 +172,10 @@ HTML_TEMPLATE = '''
             <label><input type="checkbox" id="reset" oninput="update()" checked> Добавить сброс (<code>§r</code>)</label>
         </div>
 
-        <div class="chat-preview" id="chat-preview">Привет, Мир!</div>
+        <!-- Превью чата -->
+        <div class="chat-preview" id="chat-preview">Привет, Pisya!</div>
 
+        <!-- Вывод кода -->
         <div class="output">
             <div id="hex">HEX: #FFFFFF</div>
             <div id="rgb">RGB: 255, 255, 255</div>
@@ -176,13 +183,15 @@ HTML_TEMPLATE = '''
             <button onclick="copyText()">Копировать</button>
         </div>
 
+        <!-- Подпись с ссылкой -->
         <div style="text-align: center; margin-top: 30px; color: #777; font-size: 14px;">
-            by <a href="https://bio.site/kristallik_mal" target="_blank" style="color: #bb86fc; font-weight: bold; text-decoration: none;">
+            by <a href="https://bio-36t7.onrender.com" target="_blank" style="color: #bb86fc; font-weight: bold; text-decoration: none;">
                 kristallik_mal
             </a>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script>
         function update() {
             const r = parseInt(document.getElementById("r").value);
